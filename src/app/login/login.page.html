@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+    <ion-content class="login">
+      <ion-card padding class="login-box">
+        <!--  <img src="../../assets/logo.jpg" alt="" class="if-logo">  -->
+        <form #loginForm="ngForm" novalidate>
+          <ion-item>
+    
+            <ion-input [disabled]="isLocked" clearInput="false" [(ngModel)]="login" #username="ngModel"
+              placeholder="Username" name="username" type="text" spellcheck="false" autocapitalize="off" class="code"
+              required></ion-input>
+          </ion-item>
+    
+          <ion-item>
+    
+            <ion-input clearInput="false" [(ngModel)]="password" #passwd="ngModel" placeholder="Password" name="passwd"
+              type="password" spellcheck="false" autocapitalize="off" class="code" required></ion-input>
+          </ion-item>
+    
+          <ion-button routerLink="../home" color="primary" class="login-button" block>
+            Login
+          </ion-button>
+
+          <ion-button routerLink="../register" color="primary" class="login-register" block>
+            Register
+          </ion-button>
+        </form>
+      </ion-card>
+    
+      <img class="RP-Icon" src="assets/imgs/Responsive-icon.svg" />
+      <div style="text-align: center">
+        <img class="logo" src="assets/imgs/logo-with-text.png" alt="">
+      </div>
+</ion-content>
