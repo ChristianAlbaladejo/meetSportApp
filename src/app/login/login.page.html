@@ -7,21 +7,22 @@
     <ion-content class="login">
       <ion-card padding class="login-box">
         <!--  <img src="../../assets/logo.jpg" alt="" class="if-logo">  -->
-        <form #loginForm="ngForm" novalidate>
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
           <ion-item>
     
-            <ion-input [disabled]="isLocked" clearInput="false" [(ngModel)]="login" #username="ngModel"
-              placeholder="Username" name="username" type="text" spellcheck="false" autocapitalize="off" class="code"
-              required></ion-input>
+            <ion-input [disabled]="isLocked" clearInput="false" [(ngModel)]="user.email" #email="ngModel"
+              placeholder="Email" name="email" type="email" spellcheck="false" autocapitalize="off" class="code"
+              required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"></ion-input>
+              <span *ngIf="!email.valid && email.touched">The email is incorrect</span>
           </ion-item>
     
           <ion-item>
-    
-            <ion-input clearInput="false" [(ngModel)]="password" #passwd="ngModel" placeholder="Password" name="passwd"
+            <ion-input clearInput="false" [(ngModel)]="user.password" #password="ngModel" placeholder="Password" name="password"
               type="password" spellcheck="false" autocapitalize="off" class="code" required></ion-input>
+              <span *ngIf="!email.valid && email.touched">Password is required</span>
           </ion-item>
     
-          <ion-button routerLink="../home" color="primary" class="login-button" block>
+          <ion-button type="submit" color="primary" class="login-button" block>
             Login
           </ion-button>
 
@@ -30,9 +31,4 @@
           </ion-button>
         </form>
       </ion-card>
-    
-      <img class="RP-Icon" src="assets/imgs/Responsive-icon.svg" />
-      <div style="text-align: center">
-        <img class="logo" src="assets/imgs/logo-with-text.png" alt="">
-      </div>
 </ion-content>

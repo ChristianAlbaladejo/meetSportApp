@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+import { AlertController, LoadingController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -7,11 +8,9 @@ import { environment } from 'src/environments/environment';
 })
 export class ApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public alert: AlertController, public loading: LoadingController) { }
 
-  getPrueba(){
-    var prueba = this.http.get(environment.apiUrl + '/prueba')
-    console.log(prueba)
-    return this.http.get(environment.apiUrl + '/prueba')
+  async getPrueba(){
+   
   }
 }

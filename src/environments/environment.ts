@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3800/api'
+  apiUrl: 'https://api-meet-sport.herokuapp.com/api'
 };
 
 /*

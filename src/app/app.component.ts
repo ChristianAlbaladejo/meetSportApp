@@ -1,28 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
-import { ApiService} from  './services/api.service';
-
+import { UserService } from './services/user.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  styleUrls: ['app.component.scss'],
+  providers: [UserService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit, DoCheck {
   navigate: any;
+  public identity;
+  public url;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
-    private api: ApiService
+    private _userService: UserService
 
   ) {
     this.sideMenu();
     this.initializeApp();
+    this.url = environment.apiUrl;
   }
 
   initializeApp() {
@@ -30,32 +34,46 @@ export class AppComponent {
       this.router.navigateByUrl('login');
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.primerget();
     });
   }
 
-  primerget(){
-    const path = 'http://localhost:3800/api/home' ;
-    return this.api.getPrueba();
-  }
+  /*  primerget(){
+     const path = 'http://localhost:3800/api/home' ;
+     return this.api.getPrueba();
+   } */
   sideMenu() {
     this.navigate =
       [
         {
           title: "Home",
-          url: "/dashboard",
+          url: "/",
           icon: "home"
         },
         {
           title: "Chat",
           url: "/chat",
-          icon: "chatboxes"
+          icon: "chatbubbles-outline"
         },
         {
-          title: "Contacts",
-          url: "/contacts",
-          icon: "contacts"
+          title: "User",
+          url: "/user",
+          icon: "person-circle-outline"
         },
       ]
+  }
+
+  ngOnInit() {
+    this.identity = this._userService.getIdentity();
+    console.log(this.identity);
+  }
+
+  ngDoCheck() {
+    this.identity = this._userService.getIdentity();
+  }
+
+  logout(){
+    localStorage.clear();
+    this.identity = null;
+    this.router.navigate(['/login']);
   }
 }

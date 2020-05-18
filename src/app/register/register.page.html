@@ -1,9 +1,57 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>register</ion-title>
+    <ion-title>Register</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="login">
+  <ion-card padding class="login-box">
+    <!--  <img src="../../assets/logo.jpg" alt="" class="if-logo">  -->
+    <form #RegisterForm="ngForm" (ngSubmit)="onSubmit(registerForm)" novalidate>
+      <ion-item>
+        <ion-input [disabled]="isLocked" clearInput="false" name="name" #name="ngModel" [(ngModel)]="user.name" #username="ngModel"
+          placeholder="Name" type="text" spellcheck="false" autocapitalize="off" class="code"
+          required></ion-input>
+          <span *ngIf="!name.valid && name.touched">
+            Name is required
+          </span>
+      </ion-item>
 
+      <ion-item>
+        <ion-input clearInput="false" [(ngModel)]="user.surname" name="surname" #surname="ngModel" placeholder="Surname" 
+          type="text" spellcheck="false" autocapitalize="off" class="code" required></ion-input>
+          <span *ngIf="!surname.valid && surname.touched">
+            Surname is required
+          </span>
+      </ion-item>
+
+      <ion-item>
+        <ion-input clearInput="false" [(ngModel)]="user.nick" name="nick" #nick="ngModel" placeholder="Nick" 
+          type="text" spellcheck="false" autocapitalize="off" class="code" required></ion-input>
+        <span *ngIf="!nick.valid && nick.touched">
+          Nick is required
+        </span>
+      </ion-item>
+
+      <ion-item>
+        <ion-input clearInput="false" [(ngModel)]="user.email" name="email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email="ngModel" placeholder="Email" type="email"
+          spellcheck="false" autocapitalize="off" class="code" required></ion-input>
+        <span *ngIf="!email.valid && email.touched">
+          Email is required
+        </span>
+      </ion-item>
+
+      <ion-item>
+        <ion-input clearInput="false" [(ngModel)]="user.password" name="password" #password="ngModel" placeholder="Password" type="password"
+          spellcheck="false" autocapitalize="off" class="code" required></ion-input>
+        <span *ngIf="!password.valid && password.touched">
+          Password is required
+        </span>
+      </ion-item>
+
+      <ion-button type="submit" [disabled]="!RegisterForm.form.valid" color="primary" class="login-register" block>
+        Register
+      </ion-button>
+    </form>
+  </ion-card>
 </ion-content>
