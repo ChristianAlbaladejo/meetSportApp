@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>People</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      People
+    </ion-list-header>
+
+    <ion-item *ngFor="let user of users">
+      <ion-avatar slot="start">
+        <img src="{{url + '/get-image-user/'+ user.image}}">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{user.name + ' ' + user.surname}}</h2>
+        <h3>{{user.nick}}</h3>
+        <p>{{user.email}}</p>
+        <div class="followButton" *ngIf="user._id != identity._id">
+          <ion-button color="success" (click)="followUser(user._id)" *ngIf="follows.indexOf(user._id) < 0">
+            <ion-icon name="add-circle-outline"></ion-icon> &nbsp; Seguir
+          </ion-button>
+          <ion-button ion-button [color]="user._id == followUserOver ? 'primary' : 'secondary'"
+            (mouseover)="mouseEnter(user._id)" (mouseleave)="mouseLeave(user._id)"
+            *ngIf="follows.indexOf(user._id) >= 0" (click)=unfollowUser(user._id)>
+            <span *ngIf="user._id == followUserOver;else following">
+              <ion-icon name="close-circle-outline"></ion-icon> &nbsp; Dejar de seguir
+            </span>
+            <ng-template #following>
+              <ion-icon name="checkmark-circle-outline"></ion-icon> &nbsp; Siguiendo
+            </ng-template>
+          </ion-button>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

@@ -49,6 +49,11 @@ export class AppComponent implements OnInit, DoCheck {
           url: "/",
           icon: "home"
         },
+      {
+        title: "People",
+        url: "/people",
+        icon: "people-outline"
+      },
         {
           title: "Chat",
           url: "/chat",
@@ -59,6 +64,7 @@ export class AppComponent implements OnInit, DoCheck {
           url: "/user",
           icon: "person-circle-outline"
         },
+        
       ]
   }
 
