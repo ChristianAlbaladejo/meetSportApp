@@ -13,7 +13,8 @@
 <ion-content fullscreen>
   <ion-card>
     
-      <img class="imageUser" src="{{url + '/get-image-user/' + user.image}}">
+      <img *ngIf="user.image" class="imageUser" src="{{url + '/get-image-user/' + user.image}}">
+      <img *ngIf="!user.image" src="../../assets/no-user.webp">
     
     <ion-item>
       <input  type="file" name="file" id="file" class="fileInput" [disabled]="!editing" (change)="fileChangeEvent($event)" />
@@ -21,9 +22,14 @@
         <ion-icon name="images"></ion-icon> Chage user image
       </label>
     </ion-item>
-    <ion-card-header>
-      <ion-card-title>Your user data</ion-card-title>
-    </ion-card-header>
+    <p *ngIf="stats">
+      <ion-chip outline color="secondary">
+        <ion-label>Following &nbsp; {{stats.following}}</ion-label>
+      </ion-chip>
+      <ion-chip outline color="secondary">
+        <ion-label>Followed &nbsp; {{stats.followed}}</ion-label>
+      </ion-chip>
+    </p>
     <ion-item>
       <ion-label stacked>Name: </ion-label>
       <ion-input [(ngModel)]="identity.name" name="name" #name="ngModel" [readonly]="!editing" type="text" required>
@@ -31,7 +37,6 @@
       <span *ngIf="!name.value && name.touched">
         Name is required
       </span>
-
     </ion-item>
 
     <ion-item>

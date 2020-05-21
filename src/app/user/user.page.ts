@@ -21,6 +21,7 @@ export class UserPage implements OnInit {
   public editing: boolean;
   public imageFilePath;
   public url;
+  public stats;
 
   constructor(private _route: ActivatedRoute, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController,private _uploadService: UploadService) { 
     this.user = this._userService.getIdentity();
@@ -28,6 +29,7 @@ export class UserPage implements OnInit {
     this.token = this._userService.getToken();
     this.editing = false;
     this.url = environment.apiUrl;
+    this.stats = this._userService.getStats();
   }
 
   ngOnInit() {

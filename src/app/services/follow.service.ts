@@ -5,6 +5,7 @@ import { User } from '../models/user';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { Follow } from '../models/follow';
+
 @Injectable()
 export class FollowService{
     public url:string;

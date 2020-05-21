@@ -8,7 +8,8 @@
     <ion-content>
       <ion-item>
         <ion-avatar slot="end">
-          <img src="{{url + '/get-image-user/' + identity.image}}">
+          <img *ngIf="identity.image" src="{{url + '/get-image-user/' + identity.image}}">
+          <img *ngIf="!identity.image" src="../../assets/no-user.webp">
         </ion-avatar>
         <ion-label>
           <h3>{{identity.nick}}</h3>
@@ -35,4 +36,5 @@
     </ion-content>
   </ion-menu>
   <ion-router-outlet id="content1"></ion-router-outlet>
+  
 </ion-app>

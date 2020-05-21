@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://api-meet-sport.herokuapp.com/api'
+  apiUrl: 'https://api-meet-sport.herokuapp.com/api',
+  apiGoogle: 'AIzaSyDrXC45qqoKHIKNr8Tir8z-88IOit5LbTo'
 };
 
 /*
