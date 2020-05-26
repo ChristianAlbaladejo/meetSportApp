@@ -4,8 +4,9 @@ import { User } from '../models/user'
 import { Follow } from '../models/follow';
 import { UserService } from '../services/user.service'
 import { environment } from 'src/environments/environment';
-import { AlertController, LoadingController, NavController, IonInfiniteScroll  } from '@ionic/angular'
+import { AlertController, LoadingController, NavController, IonInfiniteScroll, ModalController  } from '@ionic/angular'
 import {FollowService} from '../services/follow.service'
+
 
 @Component({
   selector: 'app-people',
@@ -24,7 +25,7 @@ export class PeoplePage implements OnInit  {
   public follows;
   public followUserOver;
  
-  constructor(private _route: ActivatedRoute, private _router: Router, private _userService: UserService, public alert: AlertController,public loading: LoadingController,public navCtrl: NavController, private _followService: FollowService) {
+  constructor(public modal: ModalController,private _route: ActivatedRoute, private _router: Router, private _userService: UserService, public alert: AlertController,public loading: LoadingController,public navCtrl: NavController, private _followService: FollowService) {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = environment.apiUrl;
@@ -128,7 +129,19 @@ export class PeoplePage implements OnInit  {
 
   doInfinite(infiniteScroll) {
     this.page++;
-    this.getUsers().then(result => infiniteScroll.complete());
+    this.getUsers().then(result => infiniteScroll.target.complete());
+  }
+
+  async loadUser(id){
+    /*
+    const modal = await this.modal.create({
+      component: ProfilePage,
+      componentProps: {
+        'user': user,
+      }
+    });
+    return await modal.present();  */
+    this._router.navigate(['/profile', id]);
   }
 
 }

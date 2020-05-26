@@ -9,31 +9,40 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="false">
-<div id="container" *ngFor="let publication of publications;let i = index">
-  <ion-card >
-    <ion-item>
-      <ion-avatar slot="start">
-        <img *ngIf="identity.image" src="{{url + '/get-image-user/' + publication.user.image}}">
-        <img *ngIf="!identity.image" src="../../assets/no-user.webp">
-      </ion-avatar>
-      <ion-label>
-        <h3>{{publication?.user.name +' '+ publication?.user.surname}}</h3>
-        <h3>{{publication?.text}}</h3>
-        <!-- <ion-button slot="end" (click)="delete(publication._id)">ASD</ion-button> -->
-      </ion-label>
-    </ion-item>
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div id="container" *ngFor="let publication of publications;let i = index" (click)="openPublication(publication)">
+    <ion-card>
+      <ion-item>
+        <ion-avatar slot="start">
+          <img *ngIf="publication.user.image" src="{{url + '/get-image-user/' + publication.user.image}}">
+          <img *ngIf="!publication.user.image" src="../../assets/no-user.webp">
+        </ion-avatar>
+        <ion-label>
+          <h3>{{publication?.user.name +' '+ publication?.user.surname+ ' '}}| &nbsp;{{'  ' +publication?.created_at | date}}</h3>
+          <h3>{{publication?.text}}</h3>
+          <h3>{{publication?.date}}</h3>
+          <!-- <ion-button slot="end" (click)="delete(publication._id)">ASD</ion-button> -->
+        </ion-label>
+      </ion-item>
 
-    <ion-card-content>
-      <!-- Poner el archivo para descargar -->
-      <div id="{{'map'+i}}" style="max-width:500px; height:300px">{{publication?.location +', '+ 12}}</div>
-    </ion-card-content>
-  </ion-card>
-</div>
+      <ion-card-content>
+        <!-- Poner el archivo para descargar -->
+        <div id="{{'map'+i}}" style="max-width:500px; height:300px"></div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
   <ion-fab horizontal="end" vertical="bottom" slot="fixed" (click)="addPublication()">
     <ion-fab-button color="medium">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

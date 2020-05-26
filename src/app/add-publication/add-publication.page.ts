@@ -10,13 +10,14 @@ import { AlertController, LoadingController, NavController, IonInfiniteScroll, T
 import { FollowService } from '../services/follow.service'
 import { GoogleMaps, GoogleMap } from '@ionic-native/google-maps'
 import { PublicationService } from '../services/publication.service'
+import { UploadService } from '../services/upload.service';
 declare var google;
 /* declare var marker; */
 @Component({
   selector: 'app-add-publication',
   templateUrl: './add-publication.page.html',
   styleUrls: ['./add-publication.page.scss'],
-  providers: [UserService, FollowService, PublicationService]
+  providers: [UserService, FollowService, PublicationService, UploadService]
 })
 export class AddPublicationPage implements OnInit {
   mapRef = null;
@@ -26,13 +27,15 @@ export class AddPublicationPage implements OnInit {
   public latitude;
   public longitude;
   public marker;
+  public date;
+  public time;
   public publication: Publication;
   
-  constructor(public toastController: ToastController, private _route: ActivatedRoute, private ngZOne: NgZone, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController, private _followService: FollowService, private _googleMaps: GoogleMaps, private geolocation: Geolocation, public _publicationService: PublicationService) {
+  constructor(private _uploadService: UploadService,public toastController: ToastController, private _route: ActivatedRoute, private ngZOne: NgZone, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController, private _followService: FollowService, private _googleMaps: GoogleMaps, private geolocation: Geolocation, public _publicationService: PublicationService) {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = environment.apiUrl;
-    this.publication = new Publication("", "", "", "", this.identity._id, "", "");
+    this.publication = new Publication("", "", "", "","" ,this.identity._id, "", "");
   }
 
   ngOnInit() {
@@ -84,6 +87,7 @@ export class AddPublicationPage implements OnInit {
   save() {
     console.log(this.marker.getPosition().lat(), this.marker.getPosition().lng(),this.publication)
     this.publication.location = this.marker.getPosition().lat() +','+ this.marker.getPosition().lng();
+    this.publication.date = this.date+ ', '+this.time;
     console.log(this.publication);
     this._publicationService.addPublication(this.token, this.publication).subscribe(
       async response => {
@@ -113,6 +117,12 @@ export class AddPublicationPage implements OnInit {
       }
     )
     this._router.navigate(['/']);
+  }
+
+  public filesToUpload: Array<File>;
+  fileChangeEvent(fileInput: any) {
+    this.filesToUpload = <Array<File>>fileInput.target.files;
+    console.log(this.filesToUpload);
   }
 
 }

@@ -35,6 +35,14 @@ const routes: Routes = [
     path: 'add-publication',
     loadChildren: () => import('./add-publication/add-publication.module').then( m => m.AddPublicationPageModule)
   },
+  {
+    path: 'publication',
+    loadChildren: () => import('./publication/publication.module').then( m => m.PublicationPageModule)
+  },
+  {
+    path: 'profile/:id',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
 ];
 
 @NgModule({
