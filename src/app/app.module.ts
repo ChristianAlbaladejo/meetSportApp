@@ -15,11 +15,11 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { HttpClientModule, } from '@angular/common/http'
 
 import {PublicationPage} from './publication/publication.page'
-/* import { ProfilePage } from './profile/profile.page' */
+ import { ProfilePage } from './profile/profile.page' 
 
 @NgModule({
-  declarations: [AppComponent, PublicationPage],
-  entryComponents: [PublicationPage],
+  declarations: [AppComponent, PublicationPage, ProfilePage],
+  entryComponents: [PublicationPage, ProfilePage],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, MomentModule],
   providers: [
     StatusBar,

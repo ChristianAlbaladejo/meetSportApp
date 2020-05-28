@@ -15,13 +15,13 @@
 
     <ion-item *ngFor="let user of users" >
       <ion-avatar slot="start">
-        <img (click)="loadUser(user._id)" *ngIf="user.image" src="{{url + '/get-image-user/'+ user.image}}">
-        <img (click)="loadUser(user._id)" *ngIf="!user.image"  src="../../assets/no-user.webp">
+        <img (click)="loadUser(user)" *ngIf="user.image" src="{{url + '/get-image-user/'+ user.image}}">
+        <img (click)="loadUser(user)" *ngIf="!user.image"  src="../../assets/no-user.webp">
       </ion-avatar>
       <ion-label>
-        <h2 (click)="loadUser(user._id)">{{user.name + ' ' + user.surname}}</h2>
-        <h3 (click)="loadUser(user._id)">{{user.nick}}</h3>
-        <p (click)="loadUser(user._id)">{{user.email}}</p>
+        <h2 (click)="loadUser(user)">{{user.name + ' ' + user.surname}}</h2>
+        <h3 (click)="loadUser(user)">{{user.nick}}</h3>
+        <p (click)="loadUser(user)">{{user.email}}</p>
         <div class="followButton" *ngIf="user._id != identity._id">
           <ion-button color="success" (click)="followUser(user._id)" *ngIf="follows.indexOf(user._id) < 0">
             <ion-icon name="add-circle-outline"></ion-icon> &nbsp; Follow

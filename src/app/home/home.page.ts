@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
   public page = 1;
   public total;
   public pages;
-  public publications: Publication[];
+  public publications: Publication[] = [];
   public coords = [];
   public markers = [];
   public maps = [];
@@ -34,6 +34,7 @@ export class HomePage implements OnInit {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = environment.apiUrl;
+    console.log(this.identity._id)
   }
   ngOnInit(): void {
     this.getPublications(this.page);
@@ -159,13 +160,89 @@ export class HomePage implements OnInit {
   }
 
   async openPublication(publication){
-  /*   const modal = await this.modalController.create({
+    const modal = await this.modalController.create({
       component: PublicationPage,
       componentProps: {
         'publication': publication,
       }
     });
-    return await modal.present(); */
+    modal.onDidDismiss().then(() => {
+      this.page = 1;
+      this.getPublications(this.page);
+    });
+
+    return await modal.present();
   }
 
+  like(publication){
+    this._publicationService.like(this.token, publication).subscribe(
+      async response => {
+        if (!response) {
+          const alert = await this.alert.create({
+            message: 'Ohh! Something gone wrong. 😥',
+            buttons: ['OK']
+          });
+          await alert.present();
+        } else {
+           for (let i = 0; i < this.publications.length; i++) {
+            if (this.publications[i]._id == publication._id) {
+               /* this.publications[i]; */
+              console.log(typeof (this.publications[i].like))
+              
+            }
+            
+          } 
+          console.log(this.identity._id)
+        }
+      },
+      async error => {
+        const alert = await this.alert.create({
+          message: 'Ohh! Something gone wrong. 😥',
+          buttons: ['OK']
+        });
+        await alert.present();
+      }
+    )
+  }
+
+  dislike(publication){
+     this._publicationService.dislike(this.token, publication).subscribe(
+      async response => {
+        if (!response) {
+          const alert = await this.alert.create({
+            message: 'Ohh! Something gone wrong. 😥',
+            buttons: ['OK']
+          });
+          await alert.present();
+        } else {
+           for (let i = 0; i < this.publications.length; i++) {
+            if (this.publications[i]._id == publication._id) {
+              this.publications[i].like += this.identity._id
+            }
+            
+          } 
+          console.log(this.publications, this.identity._id)
+        }
+      },
+      async error => {
+        const alert = await this.alert.create({
+          message: 'Ohh! Something gone wrong. 😥',
+          buttons: ['OK']
+        });
+        await alert.present();
+      }
+    )
+  }
+
+  checkIfExists(p){
+    if (p.like.includes(this.identity._id)) {
+      
+        return true;
+
+      } else {
+      
+        return false;
+      }
+    } 
 }
+

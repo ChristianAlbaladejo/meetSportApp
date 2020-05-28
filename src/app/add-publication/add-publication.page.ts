@@ -6,7 +6,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Publication } from '../models/publication';
 import { UserService } from '../services/user.service'
 import { environment } from 'src/environments/environment';
-import { AlertController, LoadingController, NavController, IonInfiniteScroll, ToastController  } from '@ionic/angular'
+import { AlertController, LoadingController, NavController, IonInfiniteScroll, ToastController } from '@ionic/angular'
 import { FollowService } from '../services/follow.service'
 import { GoogleMaps, GoogleMap } from '@ionic-native/google-maps'
 import { PublicationService } from '../services/publication.service'
@@ -30,12 +30,12 @@ export class AddPublicationPage implements OnInit {
   public date;
   public time;
   public publication: Publication;
-  
-  constructor(private _uploadService: UploadService,public toastController: ToastController, private _route: ActivatedRoute, private ngZOne: NgZone, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController, private _followService: FollowService, private _googleMaps: GoogleMaps, private geolocation: Geolocation, public _publicationService: PublicationService) {
+
+  constructor(private _uploadService: UploadService, public toastController: ToastController, private _route: ActivatedRoute, private ngZOne: NgZone, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController, private _followService: FollowService, private _googleMaps: GoogleMaps, private geolocation: Geolocation, public _publicationService: PublicationService) {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = environment.apiUrl;
-    this.publication = new Publication("", "", "", "","" ,this.identity._id, "", "");
+    this.publication = new Publication("", "", "", "", "", this.identity._id, "", "");
   }
 
   ngOnInit() {
@@ -85,27 +85,34 @@ export class AddPublicationPage implements OnInit {
   }
 
   save() {
-    console.log(this.marker.getPosition().lat(), this.marker.getPosition().lng(),this.publication)
-    this.publication.location = this.marker.getPosition().lat() +','+ this.marker.getPosition().lng();
-    this.publication.date = this.date+ ', '+this.time;
+    console.log(this.marker.getPosition().lat(), this.marker.getPosition().lng(), this.publication)
+    this.publication.location = this.marker.getPosition().lat() + ',' + this.marker.getPosition().lng();
+    this.publication.date = this.date + ', ' + this.time;
     console.log(this.publication);
     this._publicationService.addPublication(this.token, this.publication).subscribe(
       async response => {
         if (response.publication) {
-        const toast = await this.toastController.create({
-          message: 'Your publication have been saved.',
-          duration: 3500,
-          color: 'success'
-        });
-        toast.present();
-      }else{
+          this._uploadService.makeFileRequest(this.url + '/upload-file-pub/' + response.publication._id, [], this.filesToUpload, this.token, 'image')
+            .then((result: any) => {
+              console.log(result)
+              this.publication.file = result.file
+
+            });
+          const toast = await this.toastController.create({
+            message: 'Your publication have been saved.',
+            duration: 3500,
+            color: 'success'
+          });
+          toast.present();
+
+        } else {
           const toast = await this.toastController.create({
             message: 'Your publication have not been saved.',
             duration: 3500,
             color: 'danger'
           });
           toast.present();
-      }
+        }
       },
       async error => {
         const toast = await this.toastController.create({

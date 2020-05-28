@@ -6,7 +6,7 @@ import { UserService } from '../services/user.service'
 import { environment } from 'src/environments/environment';
 import { AlertController, LoadingController, NavController, IonInfiniteScroll, ModalController  } from '@ionic/angular'
 import {FollowService} from '../services/follow.service'
-
+import {ProfilePage} from '../profile/profile.page'
 
 @Component({
   selector: 'app-people',
@@ -132,16 +132,16 @@ export class PeoplePage implements OnInit  {
     this.getUsers().then(result => infiniteScroll.target.complete());
   }
 
-  async loadUser(id){
-    /*
+  async loadUser(user){
+    
     const modal = await this.modal.create({
       component: ProfilePage,
       componentProps: {
         'user': user,
       }
     });
-    return await modal.present();  */
-    this._router.navigate(['/profile', id]);
+    return await modal.present();  
+    /* this._router.navigate(['/profile', id]); */
   }
 
 }

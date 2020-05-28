@@ -14,7 +14,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <!-- <ion-item>
+   <ion-item *ngIf="user">
       <ion-avatar slot="start">
         <img *ngIf="user.image" src="{{url + '/get-image-user/'+ user.image}}">
         <img *ngIf="!user.image" src="../../assets/no-user.webp">
@@ -34,7 +34,7 @@
           Following
         </ng-template>
       </ion-button>
-    </ion-item> -->
+    </ion-item> 
   <ion-button (click)="loadmap()">Maps</ion-button>
     <div id="container" *ngFor="let publication of publications;let i = index" (click)="openPublication(publication)">
       <ion-card>

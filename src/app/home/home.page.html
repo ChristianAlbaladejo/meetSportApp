@@ -32,6 +32,8 @@
         <!-- Poner el archivo para descargar -->
         <div id="{{'map'+i}}" style="max-width:500px; height:300px"></div>
       </ion-card-content>
+      <ion-button *ngIf="!checkIfExists(publication)" (click)=like(publication)>Subscribe </ion-button>
+      <ion-button *ngIf="checkIfExists(publication)" (click)=dislike(publication)>Unsubscribe </ion-button>
     </ion-card>
   </div>
 

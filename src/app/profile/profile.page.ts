@@ -20,7 +20,7 @@ declare var google;
   providers: [UserService, FollowService, PublicationService]
 })
 export class ProfilePage implements OnInit, AfterViewInit {
-  public user;
+  public user: User;
   public identity;
   public token;
   public stats;
@@ -37,29 +37,33 @@ export class ProfilePage implements OnInit, AfterViewInit {
   public total;
   public pages;
   public sub;
-  constructor(public modalController: ModalController, private _googleMaps: GoogleMaps, private _publicationService: PublicationService, public modal: ModalController, private _route: ActivatedRoute, private _router: Router, private _userService: UserService, private _followUser: FollowService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController) {
+  constructor(public navParams: NavParams, public modalController: ModalController, private _googleMaps: GoogleMaps, private _publicationService: PublicationService, public modal: ModalController, private _route: ActivatedRoute, private _router: Router, private _userService: UserService, private _followUser: FollowService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController) {
     
-    this.sub = this._route.params.subscribe(params => {
+    /* this.sub = this._route.params.subscribe(params => {
       this.id = params.id;
       console.log(this.id);
-    });
-    console.log(this.id, this.sub)
+    }); */
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = environment.apiUrl;
-    /*    this.user = this.navParams.get('user');  */
+    this.user = this.navParams.get('user'); 
+    console.log(this.identity._id)
+    console.log(this.user._id);
     this.page = 1;
 
   }
 
   async ngOnInit() {
-    const loading = await this.loading.create();
+    
+   /*  const loading = await this.loading.create();
     loading.present();
+    
     this._route.paramMap.pipe(
       switchMap((params: ParamMap) => {
-        return this._publicationService.getPublicationsUser(this.token, this.id, this.page)
+        return this._publicationService.getPublicationsUser(this.token, this.user._id, this.page)
       }) 
     ).subscribe(res => {
+      
       this.coords = []; 
       this.total = res.total_items;
       this.pages = res.pages;
@@ -72,12 +76,12 @@ export class ProfilePage implements OnInit, AfterViewInit {
         }
         this.coords.push(object);
       }
-      console.log(this.coords)
+      
       setTimeout(() => { 
         google.maps.event.addDomListener(window, 'load', this.initialize());
         loading.dismiss();
       },3000)
-  })
+  }) */
 }
 
   ngAfterViewInit() {
@@ -85,13 +89,10 @@ export class ProfilePage implements OnInit, AfterViewInit {
 
   ionViewDidEnter() {
     /* this.getPublications(this.page); */
-    /* this.getUser(this.user._id); */
-    /* this.getPublications(this.page); */
+    this.getUser(this.user._id); 
+     this.getPublications(this.page); 
   }
 
-  loadmap(){
-    this.getPublications(this.page);
-  }
   getUser(id) {
     this._userService.getUser(id).subscribe(
       async response => {
@@ -115,7 +116,7 @@ export class ProfilePage implements OnInit, AfterViewInit {
             message: 'Ohh! Something gone wrong. 😥',
             buttons: ['OK']
           });
-
+          console.log('problemo')
           await alert.present();
         }
       },
@@ -200,10 +201,10 @@ export class ProfilePage implements OnInit, AfterViewInit {
   async getPublications(page, adding = false) {
     const loading = await this.loading.create();
     loading.present();
-    console.log(this.id);
-    this._publicationService.getPublicationsUser(this.token,this.id ,page).subscribe(
+    
+    this._publicationService.getPublicationsUser(this.token,this.user._id ,page).subscribe(
       response => {
-        console.log(response);
+        
         if (response.publications) {
           this.coords = [];
           this.total = response.total_items;
@@ -295,21 +296,20 @@ export class ProfilePage implements OnInit, AfterViewInit {
     )
   }
 
-  initialize() {
-    
+/*   initialize() {
     for (var i = 0, length = this.coords.length; i < length; i++) {
       var point = this.coords[i];
       var latlng = new google.maps.LatLng(point.lat, point.lng);
-      console.log(point, latlng, document.getElementById('map' + (i)))
+     
       this.maps[i] = new google.maps.Map(document.getElementById('map' + (i)), {
         zoom: point.zoom,
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       });
       google.maps.event.addListenerOnce(this.maps[i], 'idle', function () {
-        console.log("holaaaaaaaaaaaaaaaaaaaaaaaaa");
+        
       });
-      /* google.maps.event.addListenerOnce(this.maps[i], 'tilesloaded', function () {
+      google.maps.event.addListenerOnce(this.maps[i], 'tilesloaded', function () {
         //this part runs when the mapobject is created and rendered
         console.log("hola");
         google.maps.event.addListenerOnce(this.maps[i], 'tilesloaded', function () {
@@ -320,12 +320,35 @@ export class ProfilePage implements OnInit, AfterViewInit {
           });
           console.log("holaaaa");
         });
-      }); */
+      }); 
       
       
     }
     
-   /*  console.log(this.maps, this.markers) */
+     console.log(this.maps, this.markers) 
+  } */
+
+  initialize() {
+    for (var i = 0, length = this.coords.length; i < length; i++) {
+      var point = this.coords[i];
+      var latlng = new google.maps.LatLng(point.lat, point.lng);
+      this.maps[i] = new google.maps.Map(document.getElementById('map' + (i)), {
+        zoom: point.zoom,
+        center: latlng,
+        zoomControl: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: false,
+        gestureHandling: 'none',
+      });
+      this.markers[i] = new google.maps.Marker({
+        position: latlng,
+        map: this.maps[i]
+      });
+    }
+    console.log(this.maps, this.markers)
   }
 
   

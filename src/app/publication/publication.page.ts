@@ -5,7 +5,7 @@ import { Follow } from '../models/follow';
 import { Publication } from '../models/publication';
 import { UserService } from '../services/user.service'
 import { environment } from 'src/environments/environment';
-import { AlertController, LoadingController, NavController, NavParams, ModalController, Platform  } from '@ionic/angular'
+import { AlertController, LoadingController, NavController, NavParams, ModalController, Platform } from '@ionic/angular'
 import { FollowService } from '../services/follow.service'
 import { PublicationService } from '../services/publication.service'
 import { GoogleMaps, GoogleMap } from '@ionic-native/google-maps';
@@ -31,16 +31,16 @@ export class PublicationPage implements OnInit {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = environment.apiUrl;
-    this.publication = this.navParams.get('publication');  
-    
+    this.publication = this.navParams.get('publication');
+
   }
-  ngOnInit(){
+  ngOnInit() {
 
   }
   ionViewDidEnter() {
     this.loadMap()
   }
-  goBack(){
+  goBack() {
     this.modalController.dismiss();
   }
 
@@ -61,6 +61,45 @@ export class PublicationPage implements OnInit {
       map: this.mapRef,
       animation: google.maps.Animation.DROP
     });
+  }
+
+  async delete() {
+    let alert = this.alert.create({
+      header: 'Confirm delete publication',
+      message: 'Are you sure you want to delete the publication?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+
+          }
+        },
+        {
+          text: 'Accept',
+          handler: () => {
+            this._publicationService.deletePublication(this.token, this.publication._id).subscribe(
+              response => {
+                if (response.publications) {
+                } else {
+                  
+                }
+              },
+              async error => {
+                const alert = await this.alert.create({
+                  message: 'Ohh! Something gone wrong. 😥',
+                  buttons: ['OK']
+                });
+
+                await alert.present();
+              }
+            )
+            this.modalController.dismiss();
+          }
+        }
+      ]
+    });
+    (await alert).present();
   }
 
 }

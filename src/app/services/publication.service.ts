@@ -41,5 +41,21 @@ export class PublicationService {
         return this._http.delete(this.url + '/publication/' + id, { headers: headers });
     }
 
+    like(token, publication): Observable<any> {
+        let params = JSON.stringify(publication);
+        console.log(publication)
+        let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+
+        return this._http.post(this.url + '/like/'+ publication._id , params, { headers: headers });
+    }
+
+    dislike(token, publication): Observable<any> {
+        let params = JSON.stringify(publication);
+        console.log(publication)
+        let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+
+        return this._http.post(this.url + '/dislike/' + publication._id, params, { headers: headers });
+    }
+
 
 }
