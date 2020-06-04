@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, DoCheck {
       },
         {
           title: "Chat",
-          url: "/chat",
+          url: "/messages",
           icon: "chatbubbles-outline"
         },
         {
@@ -70,7 +70,7 @@ export class AppComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.identity = this._userService.getIdentity();
-    console.log(this.identity);
+    
   }
 
   ngDoCheck() {

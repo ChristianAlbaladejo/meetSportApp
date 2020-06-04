@@ -13,27 +13,38 @@
   <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <div id="container" *ngFor="let publication of publications;let i = index" (click)="openPublication(publication)">
+  <div id="container" *ngFor="let publication of publications;let i = index">
     <ion-card>
       <ion-item>
-        <ion-avatar slot="start">
+        <ion-avatar slot="start" (click)=openUser(publication.user)>
           <img *ngIf="publication.user.image" src="{{url + '/get-image-user/' + publication.user.image}}">
           <img *ngIf="!publication.user.image" src="../../assets/no-user.webp">
         </ion-avatar>
         <ion-label>
-          <h3>{{publication?.user.name +' '+ publication?.user.surname+ ' '}}| &nbsp;{{'  ' +publication?.created_at | date}}</h3>
+          <h3>{{publication?.user.name +' '+ publication?.user.surname+ ' '}}|
+            &nbsp;{{'  ' +publication?.created_at | date}}</h3>
           <h3>{{publication?.text}}</h3>
-          <h3>{{publication?.date}}</h3>
+          <h3>Date of exit: {{times[i]?.date | date}} &nbsp; {{ times[i]?.hour}}</h3>
           <!-- <ion-button slot="end" (click)="delete(publication._id)">ASD</ion-button> -->
         </ion-label>
       </ion-item>
 
-      <ion-card-content>
-        <!-- Poner el archivo para descargar -->
+      <ion-card-content (click)="openPublication(publication)">
         <div id="{{'map'+i}}" style="max-width:500px; height:300px"></div>
       </ion-card-content>
-      <ion-button *ngIf="!checkIfExists(publication)" (click)=like(publication)>Subscribe </ion-button>
-      <ion-button *ngIf="checkIfExists(publication)" (click)=dislike(publication)>Unsubscribe </ion-button>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+          </ion-col>
+          <ion-col>
+            <ion-button *ngIf="!checkIfExists(publication)" (click)=like(publication)>Subscribe </ion-button>
+            <ion-button *ngIf="checkIfExists(publication)" (click)=dislike(publication)>Unsubscribe </ion-button>
+          </ion-col>
+          <ion-col>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
     </ion-card>
   </div>
 

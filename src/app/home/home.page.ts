@@ -10,6 +10,7 @@ import { FollowService } from '../services/follow.service'
 import { PublicationService } from '../services/publication.service'
 import { GoogleMaps, GoogleMap } from '@ionic-native/google-maps'
 import {PublicationPage} from '../publication/publication.page'
+import { OtherUserPage } from '../other-user/other-user.page'
 declare var google;
 @Component({
   selector: 'app-home',
@@ -28,7 +29,8 @@ export class HomePage implements OnInit {
   public coords = [];
   public markers = [];
   public maps = [];
-  public items_per_page
+  public items_per_page;
+  public times = [];
 
   constructor(public modalController: ModalController, private _publicationService: PublicationService, private _route: ActivatedRoute, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController, private _followService: FollowService, private _googleMaps: GoogleMaps) {
     this.identity = this._userService.getIdentity();
@@ -55,10 +57,17 @@ export class HomePage implements OnInit {
             this.publications = response.publications
             for (let i = 0; i < this.publications.length; i++) {
               let cord = this.publications[i].location.split(',');
+              let time = this.publications[i].date.split(',');
+              
+              let object2 = {
+                date: time[0], hour: time[1].substr(12).slice(0, 5)
+              }
+              console.log(object2);
               let object = {
                 lat: cord[0], lng: cord[1], zoom: 15
               }
               this.coords.push(object);
+              this.times.push(object2);
             }
             setTimeout(() => {
               this.initialize();
@@ -71,10 +80,15 @@ export class HomePage implements OnInit {
             console.log(this.publications)
             for (let i = 0; i < this.publications.length; i++) {
               let cord = this.publications[i].location.split(',');
+              let time = this.publications[i].date.split(',');
               let object = {
                 lat: cord[0], lng: cord[1], zoom: 15
               }
+              let object2 = {
+                date: time[0], hour: time[1]
+              }
               this.coords.push(object);
+              this.times.push(object2);
             }
             setTimeout(() => {
               this.initialize();
@@ -169,6 +183,18 @@ export class HomePage implements OnInit {
     modal.onDidDismiss().then(() => {
       this.page = 1;
       this.getPublications(this.page);
+    });
+
+    return await modal.present();
+  }
+
+  async openUser(u){
+    console.log(u)
+    const modal = await this.modalController.create({
+      component: OtherUserPage,
+      componentProps: {
+        'user': u,
+      }
     });
 
     return await modal.present();

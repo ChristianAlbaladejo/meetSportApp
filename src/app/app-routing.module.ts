@@ -43,6 +43,30 @@ const routes: Routes = [
     path: 'profile/:id',
     loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
   },
+  {
+    path: 'follow-following',
+    loadChildren: () => import('./follow-following/follow-following.module').then( m => m.FollowFollowingPageModule)
+  },
+  {
+    path: 'other-user',
+    loadChildren: () => import('./other-user/other-user.module').then( m => m.OtherUserPageModule)
+  },
+  {
+    path: 'messages',
+    loadChildren: () => import('./messages/messages/messages.module').then( m => m.MessagesPageModule)
+  },
+  {
+    path: 'add',
+    loadChildren: () => import('./add/add.module').then( m => m.AddPageModule)
+  },
+  {
+    path: 'received',
+    loadChildren: () => import('./received/received.module').then( m => m.ReceivedPageModule)
+  },
+  {
+    path: 'sended',
+    loadChildren: () => import('./sended/sended.module').then( m => m.SendedPageModule)
+  },
 ];
 
 @NgModule({
