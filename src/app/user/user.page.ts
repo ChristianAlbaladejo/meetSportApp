@@ -6,7 +6,7 @@ import { AlertController, LoadingController, NavController, ModalController } fr
 import { UploadService } from '../services/upload.service';
 import { environment } from 'src/environments/environment';
 import { FollowFollowingPage } from '../follow-following/follow-following.page'
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx'
+
 /* import { Plugins, CameraResultType, CameraSource} from '@capacitor/core'
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser'; */
 @Component({
@@ -28,7 +28,7 @@ export class UserPage implements OnInit {
   public mode = 'login';
   public image;
 
-  constructor(private camera:Camera,public navCtrl: NavController, private modal: ModalController, private _route: ActivatedRoute, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, private _uploadService: UploadService) {
+  constructor(public navCtrl: NavController, private modal: ModalController, private _route: ActivatedRoute, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, private _uploadService: UploadService) {
     this.user = this._userService.getIdentity();
     this.identity = this.user;
     this.token = this._userService.getToken();

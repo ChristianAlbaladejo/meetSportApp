@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="chevron-back-outline"></ion-icon>Back
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Received</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="messages">
+    <ion-item *ngFor="let message of messages">
+      <ion-avatar slot="start">
+        <img (click)="loadUser(user)" *ngIf="message.emitter.image" src="{{url + '/get-image-user/'+ message.emitter.image}}">
+        <img (click)="loadUser(user)" *ngIf="!message.emitter.image" src="../../assets/no-user.webp">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{message.emitter.name + ' ' + message.emitter.surname}}&nbsp;{{'  ' +message?.created_at | date}}</h2>
+        <h4>Sended to: {{ message?.receiver.name + ' ' + message.receiver.surname }}</h4>
+        <p>{{message.text}}</p>
+      </ion-label>
+    </ion-item>
+  </div>
+
+<ion-grid>
+  <ion-row>
+    <ion-col>
+    </ion-col>
+    <ion-col>
+      <ion-button *ngIf="page != this.total" (click)="doInfinite()">
+        Load more
+      </ion-button>
+    </ion-col>
+    <ion-col>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+</ion-content>

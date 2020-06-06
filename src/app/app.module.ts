@@ -13,8 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { HttpClientModule, } from '@angular/common/http';
-import { Camera } from '@ionic-native/camera/ngx';
-import { WebView } from '@ionic-native/ionic-webview'
+
 
 import { PublicationPage } from './publication/publication.page'
 import { ProfilePage } from './profile/profile.page'
@@ -24,20 +23,18 @@ import { OtherUserPage } from './other-user/other-user.page'
 import { ReceivedPage } from './received/received.page';
 import { AddPage } from './add/add.page';
 import { SendedPage } from './sended/sended.page';
-import { ServiceWorkerModule } from '@angular/service-worker';
+
 import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, PublicationPage, ProfilePage, FollowFollowingPage, OtherUserPage, ReceivedPage, AddPage, SendedPage],
   entryComponents: [PublicationPage, ProfilePage, FollowFollowingPage, OtherUserPage, ReceivedPage, AddPage, SendedPage],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, MomentModule, ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, MomentModule],
   providers: [
     StatusBar,
     SplashScreen,
     GoogleMaps,
     Geolocation,
-    Camera,
-    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
