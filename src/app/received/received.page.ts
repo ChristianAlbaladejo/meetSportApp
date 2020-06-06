@@ -26,7 +26,7 @@ export class ReceivedPage implements OnInit {
   constructor(public _messageService: MessageService, public navParams: NavParams, public modal: ModalController, private _route: ActivatedRoute, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController, private _followService: FollowService) {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.url = environment.apiUrl;
+    this.url = 'https://api-meet-sport.herokuapp.com/api';
   }
 
   ngOnInit() {
@@ -50,7 +50,7 @@ export class ReceivedPage implements OnInit {
       message: 'Please wait...'
     });
     (await loading).present();
-    this._messageService.getEmmitMessages(this.token, this.page).subscribe(
+    this._messageService.getMyMessages(this.token, this.page).subscribe(
       async response => {
         console.log(response)
         if (!response.messages) {

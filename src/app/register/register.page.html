@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="success">
     <ion-title>Register</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -51,6 +51,9 @@
 
       <ion-button type="submit" [disabled]="!RegisterForm.form.valid" color="primary" class="login-register" block>
         Register
+      </ion-button>
+      <ion-button routerLink="../login" color="primary" class="login-register" block>
+        Login
       </ion-button>
     </form>
   </ion-card>

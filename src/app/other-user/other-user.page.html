@@ -1,60 +1,63 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons>
-      <ion-button (click)="dismiss()"><ion-icon name="chevron-back-outline"></ion-icon>Back</ion-button>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="chevron-back-outline"></ion-icon>Back
+      </ion-button>
     </ion-buttons>
     <ion-title>User</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
-  <ion-card>
+  <div id="container">
+    <ion-card>
 
-    <img *ngIf="user.image" class="imageUser" src="{{url + '/get-image-user/' + user.image}}">
-    <img *ngIf="!user.image" src="../../assets/no-user.webp">
-    <p *ngIf="stats">
-      <ion-chip outline color="secondary" (click)="following()">
-        <ion-label>Following &nbsp; {{stats.following}}</ion-label>
-      </ion-chip>
-      <ion-chip outline color="secondary" (click)="followed()">
-        <ion-label>Followed &nbsp; {{stats.followed}}</ion-label>
-      </ion-chip>
-    </p>
-    <ion-item>
-      <ion-label stacked>Name: </ion-label>
-      <ion-input [(ngModel)]="user.name" name="name" #name="ngModel" [readonly]="!editing" type="text" required>
-      </ion-input>
-      <span *ngIf="!name.value && name.touched">
-        Name is required
-      </span>
-    </ion-item>
+      <img *ngIf="user.image" class="imageUser" src="{{url + '/get-image-user/' + user.image}}">
+      <img *ngIf="!user.image" src="../../assets/no-user.webp">
+      <p *ngIf="stats">
+        <ion-chip outline color="secondary">
+          <ion-label>Following &nbsp; {{stats.following}}</ion-label>
+        </ion-chip>
+        <ion-chip outline color="secondary">
+          <ion-label>Followed &nbsp; {{stats.followed}}</ion-label>
+        </ion-chip>
+      </p>
+      <ion-item>
+        <ion-label stacked>Name: </ion-label>
+        <ion-input [(ngModel)]="user.name" name="name" #name="ngModel" [readonly]="!editing" type="text" required>
+        </ion-input>
+        <span *ngIf="!name.value && name.touched">
+          Name is required
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label stacked>Surname: </ion-label>
-      <ion-input [(ngModel)]="user.surname" name="surname" #surname="ngModel" [readonly]="!editing" type="text"
-        required>
-      </ion-input>
-      <span *ngIf="!surname.value && surname.touched">
-        Surname is required
-      </span>
-    </ion-item>
+      <ion-item>
+        <ion-label stacked>Surname: </ion-label>
+        <ion-input [(ngModel)]="user.surname" name="surname" #surname="ngModel" [readonly]="!editing" type="text"
+          required>
+        </ion-input>
+        <span *ngIf="!surname.value && surname.touched">
+          Surname is required
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label stacked>Nick: </ion-label>
-      <ion-input [(ngModel)]="user.nick" name="nick" #nick="ngModel" [readonly]="!editing" type="text" required>
-      </ion-input>
-      <span *ngIf="!nick.value && nick.touched">
-        Nick is required
-      </span>
-    </ion-item>
+      <ion-item>
+        <ion-label stacked>Nick: </ion-label>
+        <ion-input [(ngModel)]="user.nick" name="nick" #nick="ngModel" [readonly]="!editing" type="text" required>
+        </ion-input>
+        <span *ngIf="!nick.value && nick.touched">
+          Nick is required
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label stacked>Email: </ion-label>
-      <ion-input [(ngModel)]="user.email" name="email" #email="ngModel" [readonly]="!editing" type="text" required>
-      </ion-input>
-      <span *ngIf="!email.value && email.touched">
-        Email is required
-      </span>
-    </ion-item>
-  </ion-card>
-
+      <ion-item>
+        <ion-label stacked>Email: </ion-label>
+        <ion-input [(ngModel)]="user.email" name="email" #email="ngModel" [readonly]="!editing" type="text" required>
+        </ion-input>
+        <span *ngIf="!email.value && email.touched">
+          Email is required
+        </span>
+      </ion-item>
+    </ion-card>
+  </div>
 </ion-content>

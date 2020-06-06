@@ -28,7 +28,7 @@ export class PeoplePage implements OnInit  {
   constructor(public modal: ModalController,private _route: ActivatedRoute, private _router: Router, private _userService: UserService, public alert: AlertController,public loading: LoadingController,public navCtrl: NavController, private _followService: FollowService) {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.url = environment.apiUrl;
+    this.url = 'https://api-meet-sport.herokuapp.com/api';
    }
 
   ngOnInit() {

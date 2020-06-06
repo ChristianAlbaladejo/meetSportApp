@@ -28,12 +28,12 @@ export class OtherUserPage implements OnInit {
    
     this.user = this.navParams.get('user');
     console.log(this.user, 'aa')
-     this.getUser(this.user._id) 
+    this.getUser(this.user._id) 
     /* this.identity = this.user; */
     this.token = this._userService.getToken();
     
-    this.url = environment.apiUrl;
-    this.stats = this._userService.getStats();
+    this.url = 'https://api-meet-sport.herokuapp.com/api';
+    this.getCounters(this.user._id);
   }
 
   ngOnInit() {
@@ -65,6 +65,17 @@ export class OtherUserPage implements OnInit {
         await alert.present();
       }
     )
+  }
+
+  getCounters(id) {
+    this._userService.getCounters(id).subscribe(
+      response => {
+        this.stats = response;
+      },
+      error => {
+        console.log(<any>error);
+      }
+    );
   }
 
   dismiss(){

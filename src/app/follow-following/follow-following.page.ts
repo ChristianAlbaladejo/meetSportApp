@@ -29,7 +29,7 @@ export class FollowFollowingPage implements OnInit {
   constructor(public navParams: NavParams,public modal: ModalController, private _route: ActivatedRoute, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController, private _followService: FollowService) {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.url = environment.apiUrl;
+    this.url = 'https://api-meet-sport.herokuapp.com/api';
     this.user = this.navParams.get('user')
     console.log(this.user,"asdasd");
   }

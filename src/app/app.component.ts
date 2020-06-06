@@ -26,7 +26,7 @@ export class AppComponent implements OnInit, DoCheck {
   ) {
     this.sideMenu();
     this.initializeApp();
-    this.url = environment.apiUrl;
+    this.url = 'https://api-meet-sport.herokuapp.com/api';
   }
 
   initializeApp() {

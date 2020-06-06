@@ -27,7 +27,7 @@ export class MessagesPage implements OnInit {
 
   async receivedPage(){
     const modal = await this.modal.create({
-      component: ReceivedPage,
+      component: ReceivedPage ,
       componentProps: {}
     });
 

@@ -26,12 +26,15 @@ export class PublicationPage implements OnInit {
   public token;
   public url;
   public publication;
+  public times;
   mapRef = null;
   constructor(public modalController: ModalController, private _publicationService: PublicationService, public navParams: NavParams, private _route: ActivatedRoute, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController, private _followService: FollowService, private _googleMaps: GoogleMaps) {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.url = environment.apiUrl;
+    this.url = 'https://api-meet-sport.herokuapp.com/api';
     this.publication = this.navParams.get('publication');
+    this.times = this.navParams.get('times');
+    console.log(this.times)
 
   }
   ngOnInit() {

@@ -27,7 +27,7 @@ export class AddPage implements OnInit {
     this.identity = this._userService.getIdentity();
     this.message = new Message('','','','',this.identity._id,'');
     this.token = this._userService.getToken();
-    this.url = environment.apiUrl;
+    this.url = 'https://api-meet-sport.herokuapp.com/api';
   }
 
   ngOnInit() {

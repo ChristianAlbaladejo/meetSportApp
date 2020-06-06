@@ -5,12 +5,14 @@ import { Follow } from '../models/follow';
 import { Publication } from '../models/publication';
 import { UserService } from '../services/user.service'
 import { environment } from 'src/environments/environment';
-import { AlertController, LoadingController, NavController, ModalController  } from '@ionic/angular'
+import { AlertController, LoadingController, NavController, ModalController } from '@ionic/angular'
 import { FollowService } from '../services/follow.service'
 import { PublicationService } from '../services/publication.service'
 import { GoogleMaps, GoogleMap } from '@ionic-native/google-maps'
-import {PublicationPage} from '../publication/publication.page'
+import { PublicationPage } from '../publication/publication.page'
 import { OtherUserPage } from '../other-user/other-user.page'
+import { MenuController } from '@ionic/angular';
+import { ProfilePage } from '../profile/profile.page'
 declare var google;
 @Component({
   selector: 'app-home',
@@ -25,29 +27,32 @@ export class HomePage implements OnInit {
   public page = 1;
   public total;
   public pages;
-  public publications: Publication[] = [];
+  public publications: Array<any>
   public coords = [];
   public markers = [];
   public maps = [];
   public items_per_page;
   public times = [];
 
-  constructor(public modalController: ModalController, private _publicationService: PublicationService, private _route: ActivatedRoute, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController, private _followService: FollowService, private _googleMaps: GoogleMaps) {
+  constructor(public menuCtrl: MenuController, public modalController: ModalController, private _publicationService: PublicationService, private _route: ActivatedRoute, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController, private _followService: FollowService, private _googleMaps: GoogleMaps) {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.url = environment.apiUrl;
+    this.url = 'https://api-meet-sport.herokuapp.com/api';
     console.log(this.identity._id)
   }
   ngOnInit(): void {
     this.getPublications(this.page);
   }
 
+  ionViewWillEnter() {
+    this.menuCtrl.enable(true);
+  }
+
   async getPublications(page, adding = false) {
     const loading = await this.loading.create();
     loading.present();
-    this._publicationService.getPublications(this.token ,page).subscribe(
+    this._publicationService.getPublications(this.token, page).subscribe(
       response => {
-        console.log(response);
         if (response.publications) {
           this.coords = [];
           this.total = response.total_items;
@@ -58,11 +63,11 @@ export class HomePage implements OnInit {
             for (let i = 0; i < this.publications.length; i++) {
               let cord = this.publications[i].location.split(',');
               let time = this.publications[i].date.split(',');
-              
+
               let object2 = {
                 date: time[0], hour: time[1].substr(12).slice(0, 5)
               }
-              console.log(object2);
+              
               let object = {
                 lat: cord[0], lng: cord[1], zoom: 15
               }
@@ -115,10 +120,10 @@ export class HomePage implements OnInit {
     this._publicationService.deletePublication(this.token, p).subscribe(
       response => {
         if (response.publications) {
-          console.log("bien")
+          
 
         } else {
-          console.log("bien")
+          
         }
       },
       async error => {
@@ -135,7 +140,7 @@ export class HomePage implements OnInit {
   initialize() {
     for (var i = 0, length = this.coords.length; i < length; i++) {
       var point = this.coords[i];
-      var latlng = new google.maps.LatLng(point.lat, point.lng);    
+      var latlng = new google.maps.LatLng(point.lat, point.lng);
       this.maps[i] = new google.maps.Map(document.getElementById('map' + (i)), {
         zoom: point.zoom,
         center: latlng,
@@ -152,7 +157,6 @@ export class HomePage implements OnInit {
         map: this.maps[i]
       });
     }
-    console.log(this.maps, this.markers)
   }
 
   addPublication() {
@@ -169,15 +173,16 @@ export class HomePage implements OnInit {
   }
 
   doRefresh(event) {
-    this.page=1
+    this.page = 1
     this.getPublications(this.page, false).then(result => event.target.complete());
   }
 
-  async openPublication(publication){
+  async openPublication(publication,t) {
     const modal = await this.modalController.create({
       component: PublicationPage,
       componentProps: {
         'publication': publication,
+        'times': t
       }
     });
     modal.onDidDismiss().then(() => {
@@ -188,10 +193,9 @@ export class HomePage implements OnInit {
     return await modal.present();
   }
 
-  async openUser(u){
-    console.log(u)
+  async openUser(u) {
     const modal = await this.modalController.create({
-      component: OtherUserPage,
+      component: ProfilePage,
       componentProps: {
         'user': u,
       }
@@ -200,7 +204,8 @@ export class HomePage implements OnInit {
     return await modal.present();
   }
 
-  like(publication){
+  like(publication) {
+    this.identity = this._userService.getIdentity();
     this._publicationService.like(this.token, publication).subscribe(
       async response => {
         if (!response) {
@@ -210,14 +215,14 @@ export class HomePage implements OnInit {
           });
           await alert.present();
         } else {
-           for (let i = 0; i < this.publications.length; i++) {
+          for (let i = 0; i < this.publications.length; i++) {
             if (this.publications[i]._id == publication._id) {
-               /* this.publications[i]; */
-              console.log(typeof (this.publications[i].like))
-              
+              this.publications[i].like.push(this.identity._id)
+              console.log(this.publications[i].like)
+
             }
-            
-          } 
+
+          }
           console.log(this.identity._id)
         }
       },
@@ -231,8 +236,9 @@ export class HomePage implements OnInit {
     )
   }
 
-  dislike(publication){
-     this._publicationService.dislike(this.token, publication).subscribe(
+  dislike(publication) {
+    this.identity = this._userService.getIdentity();
+    this._publicationService.dislike(this.token, publication).subscribe(
       async response => {
         if (!response) {
           const alert = await this.alert.create({
@@ -241,13 +247,13 @@ export class HomePage implements OnInit {
           });
           await alert.present();
         } else {
-           for (let i = 0; i < this.publications.length; i++) {
+          for (let i = 0; i < this.publications.length; i++) {
             if (this.publications[i]._id == publication._id) {
-              this.publications[i].like += this.identity._id
+              var indice = this.publications[i].like.indexOf(this.identity._id); 
+              this.publications[i].like.splice(indice, 1); 
             }
-            
-          } 
-          console.log(this.publications, this.identity._id)
+          }
+          
         }
       },
       async error => {
@@ -260,15 +266,14 @@ export class HomePage implements OnInit {
     )
   }
 
-  checkIfExists(p){
+  checkIfExists(p) {
     if (p.like.includes(this.identity._id)) {
-      
-        return true;
 
-      } else {
-      
-        return false;
-      }
-    } 
+      return true;
+
+    } else {
+
+      return false;
+    }
+  }
 }
-

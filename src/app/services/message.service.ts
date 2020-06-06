@@ -9,7 +9,7 @@ import { Message } from '../models/message'
 export class  MessageService {
     public url:string;
     constructor(public _http: HttpClient, public alert: AlertController, public loading: LoadingController) {
-        this.url = environment.apiUrl;
+        this.url = 'https://api-meet-sport.herokuapp.com/api';
     }
 
     addMessage(token, message:Message):Observable<any>{

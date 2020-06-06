@@ -1,7 +1,7 @@
 <ion-app>
   <ion-menu side="start" menuId="first" contentId="content1">
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar color="success">
         <ion-title>MeetSport</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -12,7 +12,7 @@
           <img *ngIf="!identity.image" src="../../assets/no-user.webp">
         </ion-avatar>
         <ion-label>
-          <h3>{{identity.nick}}</h3>
+          <h3>{{identity.name + ' ' + identity.surname}}</h3>
           <p>{{identity.email}}</p>
         </ion-label>
       </ion-item>

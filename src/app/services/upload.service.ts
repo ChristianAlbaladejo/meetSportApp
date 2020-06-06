@@ -6,7 +6,7 @@ export class UploadService{
     public url: string;
 
     constructor(){
-        this.url = environment.apiUrl;
+        this.url = 'https://api-meet-sport.herokuapp.com/api';
     }
 
     makeFileRequest(url: string, params: Array<string>, files: Array<File>, token: string, name: string){

@@ -6,6 +6,7 @@ import { UserService } from '../services/user.service'
 import { AlertController, LoadingController, NavController } from '@ionic/angular'
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
+import { MenuController } from '@ionic/angular';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -23,12 +24,16 @@ export class LoginPage implements OnInit {
     public alert: AlertController,
     public loading: LoadingController,
     public navCtrl: NavController,
+    public menuCtrl: MenuController
   ) { 
     this.user = new User("", "", "", "", "", "", "ROLE_USER", "")
   }
 
   ngOnInit() {}
 
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false);
+  }
   async onSubmit(){
     let loading = this.loading.create({
       message: 'Please wait...'

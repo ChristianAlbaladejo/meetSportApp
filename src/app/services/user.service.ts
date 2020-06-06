@@ -12,7 +12,7 @@ export class UserService {
     public token;
     public stats;
     constructor(public _http: HttpClient, public alert: AlertController, public loading: LoadingController) {
-        this.url = environment.apiUrl;
+        this.url = 'https://api-meet-sport.herokuapp.com/api';
     }
 
     register(user: User): Observable<any> {

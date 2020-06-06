@@ -1,71 +1,75 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons slot="start" color="success">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>User</ion-title>
     <ion-buttons slot="end">
+      <!-- <ion-button><ion-icon (click)="takePicture()" name="camera-outline"></ion-icon></ion-button> -->
       <ion-button *ngIf="!editing" (click)="edit()">Edit</ion-button>
       <ion-button *ngIf="editing" (click)="save()">Save</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
-  <ion-card>
-    
+  <div id="container">
+    <ion-card>
+
       <img *ngIf="user.image" class="imageUser" src="{{url + '/get-image-user/' + user.image}}">
       <img *ngIf="!user.image" src="../../assets/no-user.webp">
-    
-    <ion-item>
-      <input  type="file" name="file" id="file" class="fileInput" [disabled]="!editing" (change)="fileChangeEvent($event)" />
-      <label for="file">
-        <ion-icon name="images"></ion-icon> Chage user image
-      </label>
-    </ion-item>
-    <p *ngIf="stats">
-      <ion-chip outline color="secondary" (click)="following()">
-        <ion-label>Following &nbsp; {{stats.following}}</ion-label>
-      </ion-chip>
-      <ion-chip outline color="secondary" (click)="followed()">
-        <ion-label>Followed &nbsp; {{stats.followed}}</ion-label>
-      </ion-chip>
-    </p>
-    <ion-item>
-      <ion-label stacked>Name: </ion-label>
-      <ion-input [(ngModel)]="identity.name" name="name" #name="ngModel" [readonly]="!editing" type="text" required>
-      </ion-input>
-      <span *ngIf="!name.value && name.touched">
-        Name is required
-      </span>
-    </ion-item>
+      <p *ngIf="stats">
+        <ion-chip outline color="secondary">
+          <ion-label>Following &nbsp; {{stats.following}}</ion-label>
+        </ion-chip>
+        <ion-chip outline color="secondary">
+          <ion-label>Followed &nbsp; {{stats.followed}}</ion-label>
+        </ion-chip>
+      </p>
+      <ion-item>
+        <input type="file" name="file" id="file" class="fileInput" [disabled]="!editing"
+          (change)="fileChangeEvent($event)" />
+        <label for="file">
+          <ion-icon name="images"></ion-icon> Chage user image
+        </label>
+      </ion-item>
 
-    <ion-item>
-      <ion-label stacked>Surname: </ion-label>
-      <ion-input [(ngModel)]="identity.surname" name="surname" #surname="ngModel" [readonly]="!editing" type="text"
-        required>
-      </ion-input>
-      <span *ngIf="!surname.value && surname.touched">
-        Surname is required
-      </span>
-    </ion-item>
+      <ion-item>
+        <ion-label stacked>Name: </ion-label>
+        <ion-input [(ngModel)]="identity.name" name="name" #name="ngModel" [readonly]="!editing" type="text" required>
+        </ion-input>
+        <span *ngIf="!name.value && name.touched">
+          Name is required
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label stacked>Nick: </ion-label>
-      <ion-input [(ngModel)]="identity.nick" name="nick" #nick="ngModel" [readonly]="!editing" type="text" required>
-      </ion-input>
-      <span *ngIf="!nick.value && nick.touched">
-        Nick is required
-      </span>
-    </ion-item>
+      <ion-item>
+        <ion-label stacked>Surname: </ion-label>
+        <ion-input [(ngModel)]="identity.surname" name="surname" #surname="ngModel" [readonly]="!editing" type="text"
+          required>
+        </ion-input>
+        <span *ngIf="!surname.value && surname.touched">
+          Surname is required
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label stacked>Email: </ion-label>
-      <ion-input [(ngModel)]="identity.email" name="email" #email="ngModel" [readonly]="!editing" type="text" required>
-      </ion-input>
-      <span *ngIf="!email.value && email.touched">
-        Email is required
-      </span>
-    </ion-item>
-  </ion-card>
+      <ion-item>
+        <ion-label stacked>Nick: </ion-label>
+        <ion-input [(ngModel)]="identity.nick" name="nick" #nick="ngModel" [readonly]="!editing" type="text" required>
+        </ion-input>
+        <span *ngIf="!nick.value && nick.touched">
+          Nick is required
+        </span>
+      </ion-item>
 
+      <ion-item>
+        <ion-label stacked>Email: </ion-label>
+        <ion-input [(ngModel)]="identity.email" name="email" #email="ngModel" [readonly]="!editing" type="text"
+          required>
+        </ion-input>
+        <span *ngIf="!email.value && email.touched">
+          Email is required
+        </span>
+      </ion-item>
+    </ion-card>
+  </div>
 </ion-content>

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="success">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -26,7 +26,7 @@
           <ion-button color="success" (click)="followUser(user._id)" *ngIf="follows.indexOf(user._id) < 0">
             <ion-icon name="add-circle-outline"></ion-icon> &nbsp; Follow
           </ion-button>
-          <ion-button ion-button [color]="user._id == followUserOver ? 'primary' : 'secondary'"
+          <ion-button ion-button [color]="user._id == followUserOver ? 'primary' : 'warning'"
             (mouseover)="mouseEnter(user._id)" (mouseleave)="mouseLeave(user._id)"
             *ngIf="follows.indexOf(user._id) >= 0" (click)=unfollowUser(user._id)>
             <span *ngIf="user._id == followUserOver;else following">

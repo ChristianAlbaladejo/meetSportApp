@@ -11,7 +11,7 @@ export class FollowService{
     public url:string;
 
     constructor(private _http: HttpClient){
-        this.url = environment.apiUrl;
+        this.url = 'https://api-meet-sport.herokuapp.com/api';
     }
 
     addFollow(token, follow):Observable<any>{

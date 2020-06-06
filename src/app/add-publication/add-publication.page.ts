@@ -34,7 +34,7 @@ export class AddPublicationPage implements OnInit {
   constructor(private _uploadService: UploadService, public toastController: ToastController, private _route: ActivatedRoute, private ngZOne: NgZone, private _router: Router, private _userService: UserService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController, private _followService: FollowService, private _googleMaps: GoogleMaps, private geolocation: Geolocation, public _publicationService: PublicationService) {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.url = environment.apiUrl;
+    this.url = 'https://api-meet-sport.herokuapp.com/api';
     this.publication = new Publication("", "", "", "", "", this.identity._id, "", "");
   }
 
@@ -84,20 +84,23 @@ export class AddPublicationPage implements OnInit {
     this._router.navigate(['/']);
   }
 
-  save() {
-    console.log(this.marker.getPosition().lat(), this.marker.getPosition().lng(), this.publication)
+  async save() {
+    if (this.date == undefined || this.time == undefined) {
+      const toast = await this.toastController.create({
+        message: 'Your publication have not been saved.',
+        duration: 3500,
+        color: 'danger'
+      });
+      toast.present();
+      this._router.navigate(['/']);
+    
+    }else{
     this.publication.location = this.marker.getPosition().lat() + ',' + this.marker.getPosition().lng();
     this.publication.date = this.date + ', ' + this.time;
-    console.log(this.publication);
+    
     this._publicationService.addPublication(this.token, this.publication).subscribe(
       async response => {
         if (response.publication) {
-          this._uploadService.makeFileRequest(this.url + '/upload-file-pub/' + response.publication._id, [], this.filesToUpload, this.token, 'image')
-            .then((result: any) => {
-              console.log(result)
-              this.publication.file = result.file
-
-            });
           const toast = await this.toastController.create({
             message: 'Your publication have been saved.',
             duration: 3500,
@@ -124,6 +127,7 @@ export class AddPublicationPage implements OnInit {
       }
     )
     this._router.navigate(['/']);
+    }
   }
 
   public filesToUpload: Array<File>;
