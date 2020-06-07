@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
 import { User } from '../models/user';
 import { AlertController, LoadingController, NavController, NavParams, ModalController } from '@ionic/angular';
@@ -13,7 +13,6 @@ import { GoogleMaps, GoogleMap } from '@ionic-native/google-maps'
 import { PublicationPage } from '../publication/publication.page'
 declare var google;
 import { OtherUserPage } from '../other-user/other-user.page'
-import { cordova, IonicNativePlugin } from '@ionic-native/core';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -40,7 +39,7 @@ export class ProfilePage implements OnInit {
   public sub;
   public times = [];
   constructor(public navParams: NavParams, public modalController: ModalController, private _googleMaps: GoogleMaps, private _publicationService: PublicationService, public modal: ModalController, private _route: ActivatedRoute, private _router: Router, private _userService: UserService, private _followUser: FollowService, public alert: AlertController, public loading: LoadingController, public navCtrl: NavController) {
-    
+
     /* this.sub = this._route.params.subscribe(params => {
       this.id = params.id;
       console.log(this.id);
@@ -48,7 +47,7 @@ export class ProfilePage implements OnInit {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = 'https://api-meet-sport.herokuapp.com/api';
-    this.user = this.navParams.get('user'); 
+    this.user = this.navParams.get('user');
   }
 
   ngOnInit(): void {
@@ -57,34 +56,34 @@ export class ProfilePage implements OnInit {
     /* setTimeout(() => {
       this.getPublications(this.page);
     }, 3000); */
-   /*  const loading = await this.loading.create();
-    loading.present();
-    
-    this._route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
-        return this._publicationService.getPublicationsUser(this.token, this.user._id, this.page)
-      }) 
-    ).subscribe(res => {
-      
-      this.coords = []; 
-      this.total = res.total_items;
-      this.pages = res.pages;
-      this.items_per_page = res.items_per_page
-      this.publications = res.publications
-      for (let i = 0; i < this.publications.length; i++) {
-        let cord = this.publications[i].location.split(',');
-        let object = {
-          lat: cord[0], lng: cord[1], zoom: 15
-        }
-        this.coords.push(object);
-      }
-      
-      setTimeout(() => { 
-        google.maps.event.addDomListener(window, 'load', this.initialize());
-        loading.dismiss();
-      },3000)
-  }) */
-}
+    /*  const loading = await this.loading.create();
+     loading.present();
+     
+     this._route.paramMap.pipe(
+       switchMap((params: ParamMap) => {
+         return this._publicationService.getPublicationsUser(this.token, this.user._id, this.page)
+       }) 
+     ).subscribe(res => {
+       
+       this.coords = []; 
+       this.total = res.total_items;
+       this.pages = res.pages;
+       this.items_per_page = res.items_per_page
+       this.publications = res.publications
+       for (let i = 0; i < this.publications.length; i++) {
+         let cord = this.publications[i].location.split(',');
+         let object = {
+           lat: cord[0], lng: cord[1], zoom: 15
+         }
+         this.coords.push(object);
+       }
+       
+       setTimeout(() => { 
+         google.maps.event.addDomListener(window, 'load', this.initialize());
+         loading.dismiss();
+       },3000)
+   }) */
+  }
 
   getUser(id) {
     this._userService.getUser(id).subscribe(
@@ -190,7 +189,7 @@ export class ProfilePage implements OnInit {
   async getPublications(page, adding = false) {
     const loading = await this.loading.create();
     loading.present();
-    this._publicationService.getPublications(this.token, page).subscribe(
+    this._publicationService.getPublicationsUser(this.token, this.user._id, page).subscribe(
       response => {
         if (response.publications) {
           this.coords = [];
@@ -277,37 +276,37 @@ export class ProfilePage implements OnInit {
     )
   }
 
-/*   initialize() {
-    for (var i = 0, length = this.coords.length; i < length; i++) {
-      var point = this.coords[i];
-      var latlng = new google.maps.LatLng(point.lat, point.lng);
-     
-      this.maps[i] = new google.maps.Map(document.getElementById('map' + (i)), {
-        zoom: point.zoom,
-        center: latlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      });
-      google.maps.event.addListenerOnce(this.maps[i], 'idle', function () {
-        
-      });
-      google.maps.event.addListenerOnce(this.maps[i], 'tilesloaded', function () {
-        //this part runs when the mapobject is created and rendered
-        console.log("hola");
-        google.maps.event.addListenerOnce(this.maps[i], 'tilesloaded', function () {
-          this.markers[i] = new google.maps.Marker({
-            position: latlng,
-            map: this.maps[i],
-            title: 'Location'
-          });
-          console.log("holaaaa");
+  /*   initialize() {
+      for (var i = 0, length = this.coords.length; i < length; i++) {
+        var point = this.coords[i];
+        var latlng = new google.maps.LatLng(point.lat, point.lng);
+       
+        this.maps[i] = new google.maps.Map(document.getElementById('map' + (i)), {
+          zoom: point.zoom,
+          center: latlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-      }); 
+        google.maps.event.addListenerOnce(this.maps[i], 'idle', function () {
+          
+        });
+        google.maps.event.addListenerOnce(this.maps[i], 'tilesloaded', function () {
+          //this part runs when the mapobject is created and rendered
+          console.log("hola");
+          google.maps.event.addListenerOnce(this.maps[i], 'tilesloaded', function () {
+            this.markers[i] = new google.maps.Marker({
+              position: latlng,
+              map: this.maps[i],
+              title: 'Location'
+            });
+            console.log("holaaaa");
+          });
+        }); 
+        
+        
+      }
       
-      
-    }
-    
-     console.log(this.maps, this.markers) 
-  } */
+       console.log(this.maps, this.markers) 
+    } */
 
   initialize() {
     for (var i = 0, length = this.coords.length; i < length; i++) {
@@ -332,7 +331,7 @@ export class ProfilePage implements OnInit {
     console.log(this.maps, this.markers)
   }
 
-  
+
 
   doInfinite(infiniteScroll) {
     if (this.publications.length == (this.total)) {
