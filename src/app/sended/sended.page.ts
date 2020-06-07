@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router'
-import { User } from '../models/user'
-import { Follow } from '../models/follow';
+
 import { Message } from '../models/message';
 import { UserService } from '../services/user.service'
-import { environment } from 'src/environments/environment';
+
 import { AlertController, LoadingController, NavController, NavParams, ModalController } from '@ionic/angular'
 import { FollowService } from '../services/follow.service'
-import { ProfilePage } from '../profile/profile.page'
+
 import { MessageService } from '../services/message.service'
 
 @Component({

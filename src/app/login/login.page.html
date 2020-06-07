@@ -10,7 +10,7 @@
         <form #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
           <ion-item>
     
-            <ion-input [disabled]="isLocked" clearInput="false" [(ngModel)]="user.email" #email="ngModel"
+            <ion-input clearInput="false" [(ngModel)]="user.email" #email="ngModel"
               placeholder="Email" name="email" type="email" spellcheck="false" autocapitalize="off" class="code"
               required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"></ion-input>
               <span *ngIf="!email.valid && email.touched">The email is incorrect</span>

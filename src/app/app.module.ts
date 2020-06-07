@@ -25,11 +25,12 @@ import { AddPage } from './add/add.page';
 import { SendedPage } from './sended/sended.page';
 
 import { environment } from '../environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent, PublicationPage, ProfilePage, FollowFollowingPage, OtherUserPage, ReceivedPage, AddPage, SendedPage],
   entryComponents: [PublicationPage, ProfilePage, FollowFollowingPage, OtherUserPage, ReceivedPage, AddPage, SendedPage],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, MomentModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, MomentModule, ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
   providers: [
     StatusBar,
     SplashScreen,

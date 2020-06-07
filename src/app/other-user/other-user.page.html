@@ -24,7 +24,7 @@
       </p>
       <ion-item>
         <ion-label stacked>Name: </ion-label>
-        <ion-input [(ngModel)]="user.name" name="name" #name="ngModel" [readonly]="!editing" type="text" required>
+        <ion-input [(ngModel)]="user.name" name="name" #name="ngModel" type="text" required>
         </ion-input>
         <span *ngIf="!name.value && name.touched">
           Name is required
@@ -33,7 +33,7 @@
 
       <ion-item>
         <ion-label stacked>Surname: </ion-label>
-        <ion-input [(ngModel)]="user.surname" name="surname" #surname="ngModel" [readonly]="!editing" type="text"
+        <ion-input [(ngModel)]="user.surname" name="surname" #surname="ngModel" type="text"
           required>
         </ion-input>
         <span *ngIf="!surname.value && surname.touched">
@@ -43,7 +43,7 @@
 
       <ion-item>
         <ion-label stacked>Nick: </ion-label>
-        <ion-input [(ngModel)]="user.nick" name="nick" #nick="ngModel" [readonly]="!editing" type="text" required>
+        <ion-input [(ngModel)]="user.nick" name="nick" #nick="ngModel" type="text" required>
         </ion-input>
         <span *ngIf="!nick.value && nick.touched">
           Nick is required
@@ -52,7 +52,7 @@
 
       <ion-item>
         <ion-label stacked>Email: </ion-label>
-        <ion-input [(ngModel)]="user.email" name="email" #email="ngModel" [readonly]="!editing" type="text" required>
+        <ion-input [(ngModel)]="user.email" name="email" #email="ngModel" type="text" required>
         </ion-input>
         <span *ngIf="!email.value && email.touched">
           Email is required

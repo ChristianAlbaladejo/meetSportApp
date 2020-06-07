@@ -14,7 +14,7 @@
 
 <ion-content>
   <ion-item>
-    <ion-avatar slot="start" (click)=openUser(publication.user)>
+    <ion-avatar slot="start">
       <img *ngIf="publication.user.image" src="{{url + '/get-image-user/' + publication.user.image}}">
       <img *ngIf="!publication.user.image" src="../../assets/no-user.webp">
     </ion-avatar>

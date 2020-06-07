@@ -13,9 +13,9 @@
   <div *ngIf="messages">
     <ion-item *ngFor="let message of messages">
       <ion-avatar slot="start">
-        <img (click)="loadUser(user)" *ngIf="message.emitter.image"
+        <img  *ngIf="message.emitter.image"
           src="{{url + '/get-image-user/'+ message.emitter.image}}">
-        <img (click)="loadUser(user)" *ngIf="!message.emitter.image" src="../../assets/no-user.webp">
+        <img  *ngIf="!message.emitter.image" src="../../assets/no-user.webp">
       </ion-avatar>
       <ion-label>
         <h2>{{message.emitter.name + ' ' + message.emitter.surname}}&nbsp;{{'  ' +message?.created_at | date}}</h2>
