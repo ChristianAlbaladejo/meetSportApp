@@ -23,6 +23,7 @@
       <h3>{{user?.name +' '+ user?.surname}}</h3>
       <h3>{{user?.nick}}</h3>
     </ion-label>
+    <div *ngIf="user._id != identity._id">
     <ion-button *ngIf="!following" color="success" (click)="followUser(user._id)">Follow</ion-button>
     <ion-button *ngIf="following" color="primary" (click)="unfollowUser(user._id)" (mouseenter)="mouseEnter(user._id)"
       (mouseleave)="mouseLeave()" [color]="user._id == followUserOver ? 'primary' : 'warning'">
@@ -33,6 +34,7 @@
         Following
       </ng-template>
     </ion-button>
+    </div>
   </ion-item>
   <div *ngIf="publications">
   <div id="container" *ngFor="let publication of publications;let i = index">
