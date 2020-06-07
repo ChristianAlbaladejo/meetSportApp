@@ -13,6 +13,7 @@ import { GoogleMaps, GoogleMap } from '@ionic-native/google-maps'
 import { PublicationPage } from '../publication/publication.page'
 declare var google;
 import { OtherUserPage } from '../other-user/other-user.page'
+import { cordova, IonicNativePlugin } from '@ionic-native/core';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -189,7 +190,7 @@ export class ProfilePage implements OnInit {
   async getPublications(page, adding = false) {
     const loading = await this.loading.create();
     loading.present();
-    this._publicationService.getPublicationsUser(this.token, this.user._id, page).subscribe(
+    this._publicationService.getPublications(this.token, page).subscribe(
       response => {
         if (response.publications) {
           this.coords = [];

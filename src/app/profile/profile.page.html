@@ -46,7 +46,7 @@
           <h3>{{publication?.user.name +' '+ publication?.user.surname+ ' '}}|
             &nbsp;{{'  ' +publication?.created_at | date}}</h3>
           <h3>{{publication?.text}}</h3>
-          <h3>{{publication?.date}}</h3>
+          <h3>Date of exit: {{times[i]?.date | date}} &nbsp; {{ times[i]?.hour}}</h3>
           <!-- <ion-button slot="end" (click)="delete(publication._id)">ASD</ion-button> -->
         </ion-label>
       </ion-item>

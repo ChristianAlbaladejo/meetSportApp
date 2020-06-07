@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { OtherUserPageRoutingModule } from './other-user-routing.module';
 
-import { OtherUserPage } from './other-user.page';
+
 
 @NgModule({
   imports: [
@@ -15,6 +15,6 @@ import { OtherUserPage } from './other-user.page';
     IonicModule,
     OtherUserPageRoutingModule
   ],
-  declarations: [OtherUserPage]
+  declarations: []
 })
 export class OtherUserPageModule {}

@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ReceivedPageRoutingModule } from './received-routing.module';
 
-import { ReceivedPage } from './received.page';
+
 
 @NgModule({
   imports: [
@@ -15,6 +15,6 @@ import { ReceivedPage } from './received.page';
     IonicModule,
     ReceivedPageRoutingModule
   ],
-  declarations: [ReceivedPage]
+  declarations: []
 })
 export class ReceivedPageModule {}

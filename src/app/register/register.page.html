@@ -7,7 +7,7 @@
 <ion-content class="login">
   <ion-card padding class="login-box">
     <!--  <img src="../../assets/logo.jpg" alt="" class="if-logo">  -->
-    <form #RegisterForm="ngForm" (ngSubmit)="onSubmit(registerForm)" novalidate>
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
       <ion-item>
         <ion-input  clearInput="false" name="name" #name="ngModel" [(ngModel)]="user.name" #username="ngModel"
           placeholder="Name" type="text" spellcheck="false" autocapitalize="off" class="code"

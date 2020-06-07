@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { FollowFollowingPageRoutingModule } from './follow-following-routing.module';
 
-import { FollowFollowingPage } from './follow-following.page';
+
 
 @NgModule({
   imports: [
@@ -15,6 +15,6 @@ import { FollowFollowingPage } from './follow-following.page';
     IonicModule,
     FollowFollowingPageRoutingModule
   ],
-  declarations: [FollowFollowingPage]
+  declarations: []
 })
 export class FollowFollowingPageModule {}

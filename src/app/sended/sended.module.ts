@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { SendedPageRoutingModule } from './sended-routing.module';
 
-import { SendedPage } from './sended.page';
+
 
 @NgModule({
     imports: [
@@ -15,6 +15,6 @@ import { SendedPage } from './sended.page';
         IonicModule,
         SendedPageRoutingModule
     ],
-    declarations: [SendedPage]
+    declarations: []
 })
 export class SendedPageModule { }

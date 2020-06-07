@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { PublicationPageRoutingModule } from './publication-routing.module';
 
-import { PublicationPage } from './publication.page';
+
 
 @NgModule({
   imports: [
@@ -15,6 +15,6 @@ import { PublicationPage } from './publication.page';
     IonicModule,
     PublicationPageRoutingModule
   ],
-  declarations: [PublicationPage]
+  declarations: []
 })
 export class PublicationPageModule {}
