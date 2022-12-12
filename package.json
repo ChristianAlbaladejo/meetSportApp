@@ -42,7 +42,7 @@
     "cordova-plugin-googlemaps": "^2.7.1",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "integrator-cordova-plugin-downloader": "^1.1.0",
     "moment": "^2.26.0",
     "morgan": "^1.10.0",
